@@ -43,6 +43,7 @@ pub struct Config {
     pub query: String,
     pub filename: String,
     pub case_sensitive: bool,
+    pub case_skip_space: bool,
 }
 
 impl Config {
@@ -64,10 +65,21 @@ impl Config {
             }
             Err(_err) => true,
         };
+        let case_skip_space = match env::var("CASE_SKIPSPACE") {
+            Ok(string) => {
+                if string == "0" {
+                    false
+                } else {
+                    true
+                }
+            }
+            Err(_err) => false,
+        };
         Ok(Config {
             query,
             filename,
             case_sensitive,
+            case_skip_space,
         })
     }
 }
