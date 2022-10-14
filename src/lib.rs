@@ -53,8 +53,17 @@ impl Config {
         }
         let query = args[1].clone();
         let filename = args[2].clone();
-        // needs to be improved
-        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+        // has been improved
+        let case_sensitive = match env::var("CASE_INSENSITIVE") {
+            Ok(string) => {
+                if string == "0" {
+                    true
+                } else {
+                    false
+                }
+            }
+            Err(_err) => true,
+        };
         Ok(Config {
             query,
             filename,
