@@ -63,7 +63,7 @@ impl Config {
                     false
                 }
             }
-            Err(_err) => true,
+            Err(_) => true,
         };
         let case_skip_space = match env::var("CASE_SKIPSPACE") {
             Ok(string) => {
@@ -73,7 +73,7 @@ impl Config {
                     true
                 }
             }
-            Err(_err) => false,
+            Err(_) => false,
         };
         Ok(Config {
             query,
