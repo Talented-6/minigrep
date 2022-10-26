@@ -21,11 +21,16 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 // default search method
 fn search<'a>(query: &str, contents: &'a str) -> Vec<(&'a str, i32)> {
     // zero-cost abstraction
-    let mut i = 0;
-    contents.lines().filter(|x| x.contains(query)).map(|x| {
-        i += 1;
-        (x, i)
+    contents.lines().zip(1..).filter(|(x, _)| {
+        x.contains(&query)
     }).collect()
+
+    // to be improved
+    // let mut i = 0;
+    // contents.lines().filter(|x| x.contains(query)).map(|x| {
+    //     i += 1;
+    //     (x, i)
+    // }).collect()
 
     // let mut results = Vec::new();
     // let mut i = 0;
