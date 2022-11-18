@@ -22,7 +22,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 fn search<'a>(query: &str, contents: &'a str) -> Vec<(&'a str, i32)> {
     // zero-cost abstraction
     contents.lines().zip(1..).filter(|(x, _)| {
-        x.contains(&query)
+        x.contains(query)
     }).collect()
 
     // to be improved
@@ -99,21 +99,13 @@ impl Config {
         // match the environment variables
         let case_sensitive = match env::var("CASE_INSENSITIVE") {
             Ok(string) => {
-                if string == "0" {
-                    true
-                } else {
-                    false
-                }
+                string == "0" 
             }
             Err(_) => true,
         };
         let case_skip_space = match env::var("CASE_SKIP_SPACE") {
             Ok(string) => {
-                if string == "0" {
-                    false
-                } else {
-                    true
-                }
+                string != "0"
             }
             Err(_) => false,
         };
